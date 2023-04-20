@@ -1,8 +1,6 @@
 import random
 import math
 
-"""
-"""
 def createGraph(filename):
     with open(filename, 'r') as file:
         G = []
