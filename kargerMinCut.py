@@ -33,21 +33,13 @@ def karger(G):
     
     for iteration in range(len(G)-2): # repeat until only 2 nodes left
         # find a random edge. i, j = row, column index
-#        print('totalDegree:', totalDegree, 'iteration:', iteration, 'total iterations:', len(G)-2)
         r = random.randint(1, totalDegree)
-        # r = totalDegree #debug
-        rInit = r #debug
         row = 0
-        try:
-            while len(G[row])-1 < r:
-                r -= len(G[row])-1
-                row += 1
-        except:
-            print('row:', row, 'out of', len(G), 'rows. Initial r =', rInit)
-        # print('row:', G[row], 'row length:', len(G[row]), 'j+1:', j+1)
+        while len(G[row])-1 < r:
+            r -= len(G[row])-1
+            row += 1
         a = row+1
         b = G[row][r]
-        # print('b:', b, 'supers[b]:', supers[b])
         while True:
             if a != supers[a]:
                 a = supers[a]
@@ -57,10 +49,7 @@ def karger(G):
                 break
         if a > b: a,b = swap(a,b)
         aRow, bRow = a-1, b-1
-        #print('randomly selected edge:', a,b)
 
-        #print('graph before contraction:', G)
-        #print('supers before contraction:', supers)
         # contract that edge 
         G[aRow][0] = G[aRow][0].union(G[bRow][0])
         G[aRow] += G[bRow][1:]
@@ -74,9 +63,6 @@ def karger(G):
         G[bRow][1:] = []
         for v in G[bRow][0]:
             supers[v] = a
-        #print('graph after contraction:', G)
-        #print('supers after contraction:', supers, '\n')
-    #print('Final graph:', G)
     return totalDegree//2
 
 def minCut(G):
